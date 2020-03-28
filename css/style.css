@@ -1,0 +1,527 @@
+*, *:before, *:after
+{
+    box-sizing: border-box;
+}
+
+html
+{
+    overflow-y: scroll;
+}
+
+body
+{
+	font-family: 'Titillium Web', sans-serif;
+	background-color: #FFFFFF;
+	
+	
+	
+}
+
+a
+{
+	text-decoration: none;
+	color: #FFFFFF;
+	-webkit-transition: .5s ease;
+	transition: .5s ease;
+}
+
+a:hover
+{
+	color: #FFFFFF;
+}
+
+.form
+{
+    background: rgba(19, 35, 47, 0.9); 
+    padding: 40px;
+    max-width: 400px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.form2
+{
+    background: rgba(19, 35, 47, 0.9); 
+    padding: 40px;
+    max-width: 1000px;
+	max-height: 1000px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.tab-group
+{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+}
+
+.tab-group:after
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.tab-group li a
+{
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    background: rgba(160, 179, 176, 0.25);
+    color: #a0b3b0;
+    font-size: 20px;
+    float: left;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+.tab-group li a:hover
+{
+	color: #ffffff;
+	background-color: #2A328B;
+}
+
+.tab-group .active a
+{
+	color: #ffffff;
+	background-color: #22276F;
+}
+
+.tab-content > div:last-child
+{
+    display: none;
+}
+
+h1
+{
+	text-align: center;
+	color: #ffffff;
+	font-weight: 20;
+	margin: 0 0 40px;
+	font-size: 21px;
+}
+
+h2
+{
+    text-align: left;
+    color: #1ab188;
+    font-weight: 1000;
+    margin: 0;
+}
+
+h3
+{
+	text-align: left;
+	color: #FFFFFF;
+	margin: 0;
+	font-size: 15px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+h6
+{
+	text-align: left;
+	color: #FFFFFF;
+	margin: 0;
+	font-size: 12px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+span
+{
+    color: #1ab188;
+    font-weight: bold;
+}
+
+p
+{
+    text-align: center;
+    color: #ffffff;
+    margin: 0px 0px 50px 0px;
+    padding-top: 2px;
+}
+
+div.info-alert
+{
+    color: pink;
+    display: box;
+    text-align: center;
+    padding: 5px;
+    margin-top: -20px;
+    margin-bottom: 15px;
+    border: 1px solid red;
+    background: #66131c;
+}
+
+div.info-success
+{
+    color: lightgreen;
+    display: box;
+    text-align: center;
+    padding: 5px;
+    margin-top: -20px;
+    margin-bottom: 15px;
+    border: 1px solid darkcyan;
+    background: #007a16;
+}
+
+label
+{
+	position: absolute;
+	-webkit-transform: translateY(6px);
+	transform: translateY(6px);
+	left: 8px;
+	color: rgba(255, 255, 255, 0.5);
+	-webkit-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+	-webkit-backface-visibility: hidden;
+	pointer-events: none;
+	font-size: 15px;
+}
+
+label .req
+{
+    margin: 2px;
+    color: #1ab188;
+}
+
+label.active
+{
+    -webkit-transform: translateY(50px);
+            transform: translateY(50px);
+    left: 2px;
+    top: -5px;
+    font-size: 14px;
+}
+
+label.active .req
+{
+    opacity: 0;
+}
+
+label.highlight
+{
+    color: #ffffff;
+}
+
+input, textarea
+{
+    font-size: 22px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 8px 10px;
+    background: none;
+    background-image: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #a0b3b0;
+    color: #ffffff;
+    border-radius: 0;
+    -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+input:focus, textarea:focus
+{
+    outline: 0;
+    border-color: #1ab188;
+}
+
+textarea
+{
+    border: 2px solid #a0b3b0;
+    resize: vertical;
+}
+
+.field-wrap
+{
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.top-row:after
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.top-row > div
+{
+    float: left;
+    width: 48%;
+    margin-right: 4%;
+}
+
+.top-row > div:last-child
+{
+    margin: 0;
+}
+
+.button
+{
+	font-family: 'Titillium Web', sans-serif;
+	border: 0;
+	outline: none;
+	border-radius: 0;
+	padding: 15px 0;
+	margin-top: 30px;
+	font-size: 12px;
+	font-weight: 300;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	color: #ffffff;
+	-webkit-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	-webkit-appearance: none;
+	background-color: #6699CC;
+}
+
+.button:hover, .button:focus
+{
+    background: #179b77;
+}
+
+.button-block
+{
+	display: block;
+	width: 160px;
+	height: 60px;
+	border-radius:5px;
+}
+
+.forgot
+{
+    margin-top: -20px;
+    text-align: right;
+}
+
+.showpass
+{
+    margin-top: -20px;
+    text-align: right;
+}
+
+.rememberme
+{
+    margin-left: 5px;
+    margin-top: -20px;
+    text-align: right;
+}
+
+.checkbox
+{
+    width: 25px;
+    margin: -16px 120px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.checkbox label
+{
+    cursor: pointer;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: -7px;
+    left: 5px;
+    background: #eee;
+    border: 1px solid #565454;
+}
+
+.checkbox label:after
+{
+    opacity: 0.5;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 5px;
+    background: transparent;
+    top: 3px;
+    left: 2px;
+    border: 3px solid #333;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+}
+
+.checkbox input[type=checkbox]:not(:checked):hover + label:after
+{
+    opacity: 1;
+}
+
+.checkbox input[type=checkbox]:checked + label:after
+{
+    opacity: 1;
+}
+
+th
+{
+    height: 80px;
+    color: #179b77;
+}
+
+td
+{
+    height: 40px;
+    color: #fff;
+    text-align: center;
+}
+
+tr:nth-child(even)
+{
+    background-color: #3d5568;
+}
+
+ /* Style the navigation bar */
+.navbar {
+  width: 50%;
+  background: rgba(160, 179, 176, 0.25);
+  float:right;
+  overflow: auto;
+  border-radius:5px;
+}
+
+/* Navbar links */
+.navbar a {
+  float: right;
+  text-align: center;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+ /* Style buttons */
+.btn {
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 12px; /* Some padding */
+  font-size: 14px; /* Set a font size */
+  cursor: pointer;
+  border-radius:4px; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
+} 
+
+.navbar2 {
+  width: 100%;
+  background: rgba(160, 179, 176);
+  float:none
+  overflow: auto;
+  border-radius:5px;
+}
+
+/* new style */
+
+
+.container {
+  width: 100%;
+  height: 480px;
+}
+
+#learn-more {
+  fill-opacity: 0;
+  fill: #fff;
+  stroke: #fff;
+  stroke-width: 2;
+  border-radius: 5px;
+  stroke-linejoin: round;
+  -webkit-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
+  cursor: pointer;
+}
+#learn-more:hover {
+  fill-opacity: 1;
+}
+#learn-more:hover ~ .learn-more-text {
+  fill: #005fa4;
+}
+
+.learn-more-text {
+  font-family: 'Roboto';
+  fill: #fff;
+  pointer-events: none;
+  font-size: 14px;
+  -webkit-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
+}
+
+.center {
+  fill: #005fa4;
+}
+
+.pointer {
+  fill: #fff;
+  stroke: #3b8fc0;
+  stroke-width: 2;
+}
+
+.nav-copy {
+  font-family: 'Roboto';
+  fill: #fff;
+  fill-opacity: 1;
+  -webkit-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
+}
+.nav-copy.changing {
+  fill-opacity: 0;
+}
+
+.service {
+  cursor: pointer;
+}
+.service text {
+  font-size: 14px;
+  font-family: 'Roboto';
+  text-anchor: middle;
+}
+.service .icon-wrapper {
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+}
+.service .icon-wrapper, .service .icon-wrapper > * {
+  -webkit-transition: all 250ms ease-in;
+  transition: all 250ms ease-in;
+}
+.service circle {
+  fill: #005fa4;
+}
+.service circle.shadow {
+  fill-opacity: 0;
+  -webkit-filter: url(#service-shadow);
+          filter: url(#service-shadow);
+}
+.service use {
+  fill: #fff;
+}
+.service text {
+  fill: #4d4d4d;
+}
+.service.active .icon-wrapper, .service:hover .icon-wrapper {
+  -webkit-transform: scale(1.15) translateY(-5px);
+          transform: scale(1.15) translateY(-5px);
+}
+.service.active .icon-wrapper, .service.active .icon-wrapper > *, .service:hover .icon-wrapper, .service:hover .icon-wrapper > * {
+  -webkit-transition: all 250ms ease-out;
+  transition: all 250ms ease-out;
+}
+.service.active .icon-wrapper circle.shadow, .service:hover .icon-wrapper circle.shadow {
+  fill-opacity: 0.4;
+}
+.service.active text, .service:hover text {
+  fill: #005fa4;
+  font-weight: bold;
+}
+
