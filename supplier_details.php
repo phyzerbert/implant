@@ -10,6 +10,29 @@
             white-space: nowrap;
             overflow:hidden;
         }
+        .box {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .active_tab1 {
+            background-color: #fff;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .inactive_tab1 {
+            background-color: #f5f5f5;
+            color: #333;
+            cursor: not-allowed;
+        }
+
+        .has-error {
+            border-color: #cc0000;
+        }
+        #editForm label {
+            font-weight : 600;
+        }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -120,7 +143,7 @@
     </div>
 
     <div class="modal" id="editModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Supplier</h4>
@@ -129,57 +152,108 @@
                 <form action="" method="post" id="editForm">
                     <input type="hidden" name="edit_id" class="id" />
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="">Company Registration Name</label>
-                            <input type="text" name="company_name" class="form-control company_name" placeholder="Company Registration Name" />
+                        <div class="px-3">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="list_company_details" data-toggle="tab" href="#company_details">Suppliers Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" id="list_supplier_details" href="#supplier_details">Company Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" id="list_contact_details" href="#contact_details">Contact Details</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <label for="">Company Registration Number</label>
-                            <input type="text" name="company_number" class="form-control company_number" placeholder="Company Registration Number" />
+                        <div class="tab-content">
+                            <div id="company_details" class="container tab-pane active"><br>
+                                <div class="card">
+                                    <div class="card-header">Company Details</div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="">Company Registration Name</label>
+                                            <input type="text" name="company_name" id="edit_company_name" class="form-control company_name" placeholder="Company Registration Name" />
+                                            <span class="text-danger" id="edit_error_company_name"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Company Registration Number</label>
+                                            <input type="text" name="company_number" id="edit_company_number" class="form-control company_number" placeholder="Company Registration Number" />
+                                            <span class="text-danger" id="edit_error_company_number"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tax Registeration Number</label>
+                                            <input type="text" name="company_tax" id="edit_company_tax" class="form-control company_tax" placeholder="Tax Registeration Number" />
+                                            <span class="text-danger" id="edit_error_company_tax"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Vat Registeration Number</label>
+                                            <input type="text" name="company_vat" id="edit_company_vat" class="form-control company_vat" placeholder="Vat Registeration Number" />
+                                            <span class="text-danger" id="edit_error_company_vat"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Company Physical Address</label>
+                                            <input type="text" name="company_address" id="edit_company_address" class="form-control company_address" placeholder="Company Physical Address" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Postal Address</label>
+                                            <input type="text" name="postal_address" id="edit_postal_address" class="form-control postal_address" placeholder="Postal Address" />
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary" id="btn_company_details">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="supplier_details" class="container tab-pane fade"><br>
+                                <div class="card">
+                                    <div class="card-header">Supplier Details</div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="">First Name</label>
+                                            <input type="text" name="first_name" id="edit_first_name" class="form-control first_name" placeholder="First Name" />
+                                            <span class="text-danger" id="edit_error_first_name"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Last Name</label>
+                                            <input type="text" name="last_name" id="edit_last_name" class="form-control last_name" placeholder="Last Name" />
+                                            <span class="text-danger" id="edit_error_last_name"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Gender</label>
+                                            <select name="gender" class="form-control gender">
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary" id="btn_prev_supplier_details">Prev</button>
+                                            <button type="button" class="btn btn-primary ml-3" id="btn_supplier_details">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="contact_details" class="container tab-pane fade"><br>
+                                <div class="card">
+                                    <div class="card-header">Contact Details</div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="">Address</label>
+                                            <input type="text" name="contact_address" id="edit_contact_address" class="form-control contact_address" placeholder="Address" />
+                                            <span class="text-danger" id="edit_error_contact_address"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Mobile No</label>
+                                            <input type="text" name="contact_mobile_no" id="edit_contact_mobile_no" class="form-control contact_mobile_no" placeholder="Mobile No" />
+                                            <span class="text-danger" id="edit_error_contact_mobile_no"></span>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary" id="btn_prev_contact_details">Prev</button>
+                                            <button type="button" class="btn btn-primary ml-3" id="btn_contact_details">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Tax Registeration Number</label>
-                            <input type="text" name="company_tax" class="form-control company_tax" placeholder="Tax Registeration Number" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Vat Registeration Number</label>
-                            <input type="text" name="company_vat" class="form-control company_vat" placeholder="Vat Registeration Number" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Company Physical Address</label>
-                            <input type="text" name="company_address" class="form-control company_address" placeholder="Company Physical Address" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Postal Address</label>
-                            <input type="text" name="postal_address" class="form-control postal_address" placeholder="Postal Address" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">First Name</label>
-                            <input type="text" name="first_name" class="form-control first_name" placeholder="First Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Last Name</label>
-                            <input type="text" name="last_name" class="form-control last_name" placeholder="Last Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Gender</label>
-                            <select name="gender" class="form-control gender">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Address</label>
-                            <input type="text" name="contact_address" class="form-control contact_address" placeholder="Address" />
-                        </div>
-                        <div class="form-group">
-                            <label for="">Mobile No</label>
-                            <input type="text" name="contact_mobile_no" class="form-control contact_mobile_no" placeholder="Mobile No" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
@@ -218,7 +292,155 @@
 
 
                 $("#editModal").modal();
-            })
+            });
+
+            $('#btn_company_details').click(function() {
+
+                var error_company_name = '';
+                var error_company_number = '';
+                var filter = /^[A-Za-z0-9 _]+$/;
+                if ($.trim($('#edit_company_name').val()).length == 0) {
+                    error_company_name = 'Company is required';
+                    $('#edit_error_company_name').text(error_company_name);
+                    $('#edit_company_name').addClass('has-error');
+                } else {
+                    if (!filter.test($('#edit_company_name').val())) {
+                        error_company_name = 'Invalid company name';
+                        $('#edit_error_company_name').text(error_company_name);
+                        $('#edit_company_name').parent().addClass('has-error');
+                    } else {
+                        error_company_name = '';
+                        $('#edit_error_company_name').text(error_company_name);
+                        $('#edit_company_name').removeClass('has-error');
+                    }
+                }
+
+                if ($.trim($('#edit_company_number').val()).length == 0) {
+                    error_company_number = 'Company number is required';
+                    $('#edit_error_company_number').text(error_company_number);
+                    $('#edit_company_number').addClass('has-error');
+                } else {
+                    error_company_number = '';
+                    $('#edit_error_company_number').text(error_company_number);
+                    $('#edit_company_number').removeClass('has-error');
+                }
+
+                if (error_company_name != '' || error_company_number != '') {
+                    return false;
+                } else {
+                    $('#list_company_details').removeClass('active active_tab1');
+                    $('#list_company_details').removeAttr('href data-toggle');
+                    $('#company_details').removeClass('active');
+                    $('#list_company_details').addClass('inactive_tab1');
+                    $('#list_supplier_details').removeClass('inactive_tab1');
+                    $('#list_supplier_details').addClass('active_tab1 active');
+                    $('#list_supplier_details').attr('href', '#supplier_details');
+                    $('#list_supplier_details').attr('data-toggle', 'tab');
+                    $('#supplier_details').addClass('active show');
+                }
+            });
+
+            $('#btn_prev_supplier_details').click(function() {
+                $('#list_supplier_details').removeClass('active active_tab1');
+                $('#list_supplier_details').removeAttr('href data-toggle');
+                $('#supplier_details').removeClass('active in');
+                $('#list_supplier_details').addClass('inactive_tab1');
+                $('#list_company_details').removeClass('inactive_tab1');
+                $('#list_company_details').addClass('active_tab1 active');
+                $('#list_company_details').attr('href', '#company_details');
+                $('#list_company_details').attr('data-toggle', 'tab');
+                $('#company_details').addClass('active show');
+            });
+
+            $('#btn_supplier_details').click(function() {
+                var error_first_name = '';
+                var error_last_name = '';
+
+                if ($.trim($('#edit_first_name').val()).length == 0) {
+                    error_first_name = 'First Name is required';
+                    $('#edit_error_first_name').text(error_first_name);
+                    $('#edit_first_name').addClass('has-error');
+                } else {
+                    error_first_name = '';
+                    $('#edit_error_first_name').text(error_first_name);
+                    $('#edit_first_name').removeClass('has-error');
+                }
+
+                if ($.trim($('#edit_last_name').val()).length == 0) {
+                    error_last_name = 'Last Name is required';
+                    $('#edit_error_last_name').text(error_last_name);
+                    $('#edit_last_name').addClass('has-error');
+                } else {
+                    error_last_name = '';
+                    $('#edit_error_last_name').text(error_last_name);
+                    $('#edit_last_name').removeClass('has-error');
+                }
+
+                if (error_first_name != '' || error_last_name != '') {
+                    return false;
+                } else {
+                    $('#list_supplier_details').removeClass('active active_tab1');
+                    $('#list_supplier_details').removeAttr('href data-toggle');
+                    $('#supplier_details').removeClass('active');
+                    $('#list_supplier_details').addClass('inactive_tab1');
+                    $('#list_contact_details').removeClass('inactive_tab1');
+                    $('#list_contact_details').addClass('active_tab1 active');
+                    $('#list_contact_details').attr('href', '#contact_details');
+                    $('#list_contact_details').attr('data-toggle', 'tab');
+                    $('#contact_details').addClass('active show');
+                }
+            });
+
+            $('#btn_prev_contact_details').click(function() {
+                $('#list_contact_details').removeClass('active active_tab1');
+                $('#list_contact_details').removeAttr('href data-toggle');
+                $('#contact_details').removeClass('active in');
+                $('#list_contact_details').addClass('inactive_tab1');
+                $('#list_supplier_details').removeClass('inactive_tab1');
+                $('#list_supplier_details').addClass('active_tab1 active');
+                $('#list_supplier_details').attr('href', '#supplier_details');
+                $('#list_supplier_details').attr('data-toggle', 'tab');
+                $('#supplier_details').addClass('active show');
+            });
+
+            $('#btn_contact_details').click(function() {
+                var error_address = '';
+                var error_mobile_no = '';
+                var mobile_validation = /^\d{10}$/;
+                if ($.trim($('#edit_contact_address').val()).length == 0) {
+                    error_address = 'Address is required';
+                    $('#edit_error_contact_address').text(error_address);
+                    $('#edit_contact_address').addClass('has-error');
+                } else {
+                    error_address = '';
+                    $('#edit_error_contact_address').text(error_address);
+                    $('#edit_contact_address').removeClass('has-error');
+                }
+
+                if ($.trim($('#edit_contact_mobile_no').val()).length == 0) {
+                    error_mobile_no = 'Mobile Number is required';
+                    $('#edit_error_contact_mobile_no').text(error_mobile_no);
+                    $('#edit_error_contact_mobile_no').addClass('has-error');
+                } else {
+                    if (!mobile_validation.test($('#edit_contact_mobile_no').val())) {
+                        error_mobile_no = 'Invalid Mobile Number';
+                        $('#edit_error_contact_mobile_no').text(error_mobile_no);
+                        $('#edit_contact_mobile_no').addClass('has-error');
+                    } else {
+                        error_mobile_no = '';
+                        $('#edit_error_contact_mobile_no').text(error_mobile_no);
+                        $('#edit_contact_mobile_no').removeClass('has-error');
+                    }
+                }
+                console.log(error_address, error_mobile_no);
+                if (error_address != '' || error_mobile_no != '') {
+                    return false;
+                } else {
+                    $('#btn_contact_details').attr("disabled", "disabled");
+                    $(document).css('cursor', 'prgress');
+                    $("#editForm").submit();
+                }
+            });
         });
     </script>
 </body>

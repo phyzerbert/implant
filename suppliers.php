@@ -5,9 +5,10 @@
         
         <title>Register Supplier</title>
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
         <style>
             .box {
@@ -30,6 +31,9 @@
             .has-error {
                 border-color: #cc0000;
                 background-color: #ffff99;
+            }
+            .form-group label {
+                font-weight: 600;
             }
         </style>
     </head>
@@ -67,20 +71,29 @@
                 <input type="hidden" name="supplier_register" value="1">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active_tab1" style="border:1px solid #ccc" id="list_login_details">Suppliers Details</a>
+                        <a class="nav-link active_tab1" style="border:1px solid #ccc" id="list_supplier_details">Suppliers Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link inactive_tab1" id="list_personal_details" style="border:1px solid #ccc">Company Details</a>
+                        <a class="nav-link inactive_tab1" id="list_company_details" style="border:1px solid #ccc">Company Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link inactive_tab1" id="list_contact_details" style="border:1px solid #ccc">Contact Details</a>
+                        <a class="nav-link inactive_tab1" id="list_business_details" style="border:1px solid #ccc">Business Unit / All Commodities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link inactive_tab1" id="list_financial_details" style="border:1px solid #ccc">Company Finanacial Capacity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link inactive_tab1" id="list_banking_details" style="border:1px solid #ccc">Company Banking Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link inactive_tab1" id="list_document_details" style="border:1px solid #ccc">Vendor / Suppliers Document Attachment</a>
                     </li>
                 </ul>
                 <div class="tab-content" style="margin-top:16px;">
-                    <div class="tab-pane active" id="login_details">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Company Details</div>
-                            <div class="panel-body">
+                    <div class="tab-pane active" id="supplier_details">
+                        <div class="card card-default">
+                            <div class="card-header">Supplier Details</div>
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label>Company Registered Name</label>
                                     <input type="text" name="company_name" id="company_name" class="form-control" autofocus />
@@ -118,78 +131,65 @@
                                 <br />
 
                                 <div align="center">
-                                    <button type="button" name="btn_login_details" id="btn_login_details" class="btn btn-info btn-lg">Next</button>
+                                    <button type="button" name="btn_supplier_details" id="btn_supplier_details" class="btn btn-info btn-lg">Next</button>
                                 </div>
                                 <br />
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="personal_details">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Company Contact Details</div>
-                            <div class="panel-body">
+                    <div class="tab-pane fade" id="company_details">
+                        <div class="card card-default">
+                            <div class="card-header">Company Contact Details</div>
+                            <div class="card-body">
                                 <div class="form-group">
-                                    <label>Enter First Name</label>
-                                    <input type="text" name="first_name" id="first_name" class="form-control" />
-                                    <span id="error_first_name" class="text-danger"></span>
+                                    <label>Company Contact Person</label>
+                                    <input type="text" name="company_contact_person" id="company_contact_person" class="form-control" />
+                                    <span id="error_company_contact_person" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label>Enter Last Name</label>
-                                    <input type="text" name="last_name" id="last_name" class="form-control" />
-                                    <span id="error_last_name" class="text-danger"></span>
+                                    <label>Telephone</label>
+                                    <input type="text" name="company_telephone" id="company_telephone" class="form-control" />
+                                    <span id="error_company_telephone" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label>Gender</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="gender" value="male" checked> Male
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="gender" value="female"> Female
-                                    </label>
+                                    <label>Company Email</label>
+                                    <input type="email" name="company_email" id="company_email" class="form-control" />
+                                    <span id="error_company_email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fax Number</label>
+                                    <input type="text" name="company_fax" id="company_fax" class="form-control" />
+                                    <span id="error_company_fax" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Company Website</label>
+                                    <input type="text" name="company_website" id="company_website" class="form-control" />
+                                    <span id="error_company_website" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div align="center">
-                                    <button type="button" name="previous_btn_personal_details" id="previous_btn_personal_details" class="btn btn-default btn-lg">Previous</button>
-                                    <button type="button" name="btn_personal_details" id="btn_personal_details" class="btn btn-info btn-lg">Next</button>
+                                    <button type="button" name="btn_prev_company_details" id="btn_prev_company_details" class="btn btn-default btn-lg">Previous</button>
+                                    <button type="button" name="btn_company_details" id="btn_company_details" class="btn btn-info btn-lg">Next</button>
                                 </div>
                                 <br />
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="contact_details">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Fill Contact Details</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label>Enter Address</label>
-                                    <textarea name="contact_address" id="contact_address" class="form-control"></textarea>
-                                    <span id="error_contact_address" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Enter Mobile No.</label>
-                                    <input type="text" name="contact_mobile_no" id="contact_mobile_no" class="form-control" />
-                                    <span id="error_contact_mobile_no" class="text-danger"></span>
-                                </div>
-                                <br />
-                                <div align="center">
-                                    <button type="button" name="previous_btn_contact_details" id="previous_btn_contact_details" class="btn btn-default btn-lg">Previous</button>
-                                    <button type="button" name="btn_contact_details" id="btn_contact_details" class="btn btn-success btn-lg">Register</button>
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                    </div>
+
+
+
+                    <!-- **************************************************** -->
                 </div>
             </form>
         </div>
 
     <script>
         $(document).ready(function() {
-            $('#btn_login_details').click(function() {
+            $('#btn_supplier_details').click(function() {
 
                 var error_company_name = '';
                 var error_company_number = '';
-                var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var filter = /^[A-Za-z0-9 _]+$/;
 
                 if ($.trim($('#company_name').val()).length == 0) {
                     error_email = 'Company is required';
@@ -216,74 +216,74 @@
                     $('#error_company_number').text(error_company_number);
                     $('#company_number').removeClass('has-error');
                 }
-
+                
                 if (error_company_name != '' || error_company_number != '') {
                     return false;
                 } else {
-                    $('#list_login_details').removeClass('active active_tab1');
-                    $('#list_login_details').removeAttr('href data-toggle');
-                    $('#login_details').removeClass('active');
-                    $('#list_login_details').addClass('inactive_tab1');
-                    $('#list_personal_details').removeClass('inactive_tab1');
-                    $('#list_personal_details').addClass('active_tab1 active');
-                    $('#list_personal_details').attr('href', '#personal_details');
-                    $('#list_personal_details').attr('data-toggle', 'tab');
-                    $('#personal_details').addClass('active in');
+                    $('#list_supplier_details').removeClass('active active_tab1');
+                    $('#list_supplier_details').removeAttr('href data-toggle');
+                    $('#supplier_details').removeClass('active');
+                    $('#list_supplier_details').addClass('inactive_tab1');
+                    $('#list_company_details').removeClass('inactive_tab1');
+                    $('#list_company_details').addClass('active_tab1 active');
+                    $('#list_company_details').attr('href', '#company_details');
+                    $('#list_company_details').attr('data-toggle', 'tab');
+                    $('#company_details').addClass('active show');
                 }
             });
 
-            $('#previous_btn_personal_details').click(function() {
-                $('#list_personal_details').removeClass('active active_tab1');
-                $('#list_personal_details').removeAttr('href data-toggle');
-                $('#personal_details').removeClass('active in');
-                $('#list_personal_details').addClass('inactive_tab1');
-                $('#list_login_details').removeClass('inactive_tab1');
-                $('#list_login_details').addClass('active_tab1 active');
-                $('#list_login_details').attr('href', '#login_details');
-                $('#list_login_details').attr('data-toggle', 'tab');
-                $('#login_details').addClass('active in');
+            $('#previous_btn_company_details').click(function() {
+                $('#list_company_details').removeClass('active active_tab1');
+                $('#list_company_details').removeAttr('href data-toggle');
+                $('#company_details').removeClass('active in');
+                $('#list_company_details').addClass('inactive_tab1');
+                $('#list_supplier_details').removeClass('inactive_tab1');
+                $('#list_supplier_details').addClass('active_tab1 active');
+                $('#list_supplier_details').attr('href', '#supplier_details');
+                $('#list_supplier_details').attr('data-toggle', 'tab');
+                $('#supplier_details').addClass('active show');
             });
 
-            $('#btn_personal_details').click(function() {
-                var error_first_name = '';
-                var error_last_name = '';
+            $('#btn_company_details').click(function() {
+                var error_contact_person = '';
+                var error_telephone = '';
 
-                if ($.trim($('#first_name').val()).length == 0) {
-                    error_first_name = 'First Name is required';
-                    $('#error_first_name').text(error_first_name);
-                    $('#first_name').addClass('has-error');
+                if ($.trim($('#company_contact_person').val()).length == 0) {
+                    error_contact_person = 'Company Contact Person is required';
+                    $('#error_company_contact_person').text(error_contact_person);
+                    $('#company_contact_person').addClass('has-error');
                 } else {
-                    error_first_name = '';
-                    $('#error_first_name').text(error_first_name);
-                    $('#first_name').removeClass('has-error');
+                    error_contact_person = '';
+                    $('#error_company_contact_person').text(error_contact_person);
+                    $('#company_contact_person').removeClass('has-error');
                 }
 
-                if ($.trim($('#last_name').val()).length == 0) {
-                    error_last_name = 'Last Name is required';
-                    $('#error_last_name').text(error_last_name);
-                    $('#last_name').addClass('has-error');
+                if ($.trim($('#company_telephone').val()).length == 0) {
+                    error_telephone = 'Telephone is required';
+                    $('#error_company_telephone').text(error_telephone);
+                    $('#company_telephone').addClass('has-error');
                 } else {
-                    error_last_name = '';
-                    $('#error_last_name').text(error_last_name);
-                    $('#last_name').removeClass('has-error');
+                    error_telephone = '';
+                    $('#error_company_telephone').text(error_telephone);
+                    $('#company_telephone').removeClass('has-error');
                 }
 
-                if (error_first_name != '' || error_last_name != '') {
+                if (error_contact_person != '' || error_telephone != '') {
                     return false;
                 } else {
-                    $('#list_personal_details').removeClass('active active_tab1');
-                    $('#list_personal_details').removeAttr('href data-toggle');
-                    $('#personal_details').removeClass('active');
-                    $('#list_personal_details').addClass('inactive_tab1');
-                    $('#list_contact_details').removeClass('inactive_tab1');
-                    $('#list_contact_details').addClass('active_tab1 active');
-                    $('#list_contact_details').attr('href', '#contact_details');
-                    $('#list_contact_details').attr('data-toggle', 'tab');
-                    $('#contact_details').addClass('active in');
+                    $('#list_company_details').removeClass('active active_tab1');
+                    $('#list_company_details').removeAttr('href data-toggle');
+                    $('#company_details').removeClass('active');
+                    $('#list_company_details').addClass('inactive_tab1');
+                    $('#list_business_details').removeClass('inactive_tab1');
+                    $('#list_business_details').addClass('active_tab1 active');
+                    $('#list_business_details').attr('href', '#contact_details');
+                    $('#list_business_details').attr('data-toggle', 'tab');
+                    $('#business_details').addClass('active show');
                 }
             });
 
-            $('#previous_btn_contact_details').click(function() {
+            $('#btn_prev_business_details').click(function() {
                 $('#list_contact_details').removeClass('active active_tab1');
                 $('#list_contact_details').removeAttr('href data-toggle');
                 $('#contact_details').removeClass('active in');
@@ -295,7 +295,7 @@
                 $('#personal_details').addClass('active in');
             });
 
-            $('#btn_contact_details').click(function() {
+            $('#btn_business_details').click(function() {
                 var error_address = '';
                 var error_mobile_no = '';
                 var mobile_validation = /^\d{10}$/;
