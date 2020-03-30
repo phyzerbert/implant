@@ -148,7 +148,7 @@ if(isset($_POST["email"]))
                                     <br />
                                     <div class="form-group">
                                         <label>Postal Address</label>
-                                        <input type="text" name="postaladdress" id="postaladdress" class="form-control" />
+                                        <input type="text" name="postal_address" id="postal_address" class="form-control" />
                                         <span id="error_password" class="text-danger"></span>
                                     </div>
                                     <br />
