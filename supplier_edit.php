@@ -49,10 +49,21 @@
                 header("location: error.php");
             }
 
+            if(!isset($_GET['id']) || !$_GET['id']) {
+                $_SESSION['message'] = "<div class='info-alert'>Invalid parameter!</div>";
+                header("location: error.php");
+            }
+            $id = $_GET['id'];
+            $query = "SELECT * FROM suppliers WHERE id = $id";
+            $result = $mysqli->query($query);
+            if ($result->num_rows > 0) {
+                $supplier = $result->fetch_assoc();
+            } else {
+                $_SESSION['message'] = "<div class='info-alert'>Invalid parameter!</div>";
+                header("location: error.php");
+            }
             $message='';
             $key_array = [
-                'user_id',
-                'reference_no',
                 'company_name',
                 'company_number',
                 'company_tax',
@@ -81,7 +92,7 @@
                 'document_terms',
             ];
 
-            if(isset($_POST["supplier_register"])) {
+            if(isset($_POST["supplier_edit"])) {
                 sleep(5);
                 $insert_data = array();
                 foreach ($key_array as $key) {
@@ -111,6 +122,8 @@
 
                     if (move_uploaded_file($_FILES["document_company_registration"]["tmp_name"], $target_file)) {
                         $insert_data['document_company_registration'] = $target_file;
+                    } else {
+                        $insert_data['document_company_registration'] = $supplier['document_company_registration'];
                     }
                 }
 
@@ -120,6 +133,8 @@
 
                     if (move_uploaded_file($_FILES["document_tax"]["tmp_name"], $target_file)) {
                         $insert_data['document_tax'] = $target_file;
+                    } else {
+                        $insert_data['document_tax'] = $supplier['document_tax'];
                     }
                 }
 
@@ -129,6 +144,8 @@
 
                     if (move_uploaded_file($_FILES["document_bee"]["tmp_name"], $target_file)) {
                         $insert_data['document_bee'] = $target_file;
+                    } else {
+                        $insert_data['document_bee'] = $supplier['document_bee'];
                     }
                 }
 
@@ -138,33 +155,22 @@
 
                     if (move_uploaded_file($_FILES["document_id_document"]["tmp_name"], $target_file)) {
                         $insert_data['document_id_document'] = $target_file;
+                    } else {
+                        $insert_data['document_id_document'] = $supplier['document_id_document'];
                     }
                 }
-                $reference_no = time();
-                $insert_data['reference_no'] = $reference_no;
-                $insert_data['user_id'] = $_SESSION['id'];
 
                 // var_dump($insert_data); die();
 
-                $query = "INSERT INTO suppliers (";
+                $query = "UPDATE suppliers SET ";
 
                 foreach($key_array as $key){
-                    $query .= "$key, ";
+                    $query .= "$key = '$insert_data[$key]', ";
                 }
-                $query = rtrim($query, ", ") . ") VALUES (";
-
-                foreach($key_array as $key){
-                    $query .= "'$insert_data[$key]',";
-                }
-                $query = rtrim($query, ",") . ")";
-
-                // echo $query; die();
-
-                // $query = "INSERT INTO suppliers (company_name, company_number, company_tax, company_vat, company_address, postal_address, first_name, last_name, gender, contact_address, contact_mobile_no)
-                //         VALUES ('".$_POST["company_name"]."','".$_POST["company_number"]."','".$_POST["company_tax"]."','".$_POST["company_vat"]."','".$_POST["company_address"]."','".$_POST["postal_address"]."','".$_POST["first_name"]."','".$_POST["last_name"]."','".$_POST["gender"]."','".$_POST["contact_address"]."','".$_POST["contact_mobile_no"]."')";
+                $query = rtrim($query, ", ") . " WHERE id = $id";
 
                 if ($mysqli->query($query) === TRUE) {
-                    $message = "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Success!</strong>  Registration Completed Successfully, No: $reference_no </div>";
+                    $message = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong>  Registration Completed Successfully </div>';
                 } else {
                     // $error = $mysqli->error;
                     // $message="<div class='alert alert-success'> $error </div> ";
@@ -172,6 +178,7 @@
                 }
 
                 $mysqli->close();
+                header("location: supplier_details.php");
             }
         ?>
         <br />
@@ -180,8 +187,8 @@
             <h2 align="center">Supplier Registration</h2>
             <br />
             <?php echo $message; ?>
-            <form method="post" id="register_form" enctype="multipart/form-data">
-                <input type="hidden" name="supplier_register" value="1">
+            <form method="post" id="edit_form" enctype="multipart/form-data">
+                <input type="hidden" name="supplier_edit" value="1">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active_tab1" style="border:1px solid #ccc" id="list_supplier_details">Suppliers Details</a>
@@ -209,36 +216,36 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Company Registered Name</label>
-                                    <input type="text" name="company_name" id="company_name" class="form-control" autofocus />
+                                    <input type="text" name="company_name" id="company_name" class="form-control" value="<?php echo $supplier['company_name']; ?>" />
                                     <span id="error_company_name" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Company Registered Number</label>
-                                    <input type="text" name="company_number" id="company_number" class="form-control" />
+                                    <input type="text" name="company_number" id="company_number" class="form-control" value="<?php echo $supplier['company_number']; ?>" />
                                     <span id="error_company_number" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label>Tax Registeration Number</label>
-                                    <input type="text" name="company_tax" id="company_tax" class="form-control" />
+                                    <input type="text" name="company_tax" id="company_tax" class="form-control" value="<?php echo $supplier['company_tax']; ?>" />
                                     <span id="error_company_tax" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label>Vat Registeration Number</label>
-                                    <input type="text" name="company_vat" id="company_vat" class="form-control" />
+                                    <input type="text" name="company_vat" id="company_vat" class="form-control" value="<?php echo $supplier['company_vat']; ?>" />
                                     <span id="error_company_vat" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label>Company Physical Address</label>
-                                    <textarea name="company_address" class="form-control" id="company_address"></textarea>
+                                    <textarea name="company_address" class="form-control" id="company_address"><?php echo $supplier['company_address']; ?></textarea>
                                     <span id="error_company_address" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div class="form-group">
                                     <label>Postal Address</label>
-                                    <input type="text" name="postal_address" id="postal_address" class="form-control" />
+                                    <input type="text" name="postal_address" id="postal_address" class="form-control" value="<?php echo $supplier['postal_address']; ?>" />
                                     <span id="error_postal_address" class="text-danger"></span>
                                 </div>
                                 <br />
@@ -257,27 +264,27 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Company Contact Person</label>
-                                    <input type="text" name="company_contact_person" id="company_contact_person" class="form-control" />
+                                    <input type="text" name="company_contact_person" id="company_contact_person" class="form-control" value="<?php echo $supplier['company_contact_person']; ?>" />
                                     <span id="error_company_contact_person" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Telephone</label>
-                                    <input type="text" name="company_telephone" id="company_telephone" class="form-control" />
+                                    <input type="text" name="company_telephone" id="company_telephone" class="form-control" value="<?php echo $supplier['company_telephone']; ?>" />
                                     <span id="error_company_telephone" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Company Email</label>
-                                    <input type="text" name="company_email" id="company_email" class="form-control" />
+                                    <input type="text" name="company_email" id="company_email" class="form-control" value="<?php echo $supplier['company_email']; ?>" />
                                     <span id="error_company_email" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Fax Number</label>
-                                    <input type="text" name="company_fax" id="company_fax" class="form-control" />
+                                    <input type="text" name="company_fax" id="company_fax" class="form-control" value="<?php echo $supplier['company_fax']; ?>" />
                                     <span id="error_company_fax" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Company Website</label>
-                                    <input type="text" name="company_website" id="company_website" class="form-control" />
+                                    <input type="text" name="company_website" id="company_website" class="form-control" value="<?php echo $supplier['company_website']; ?>" />
                                     <span id="error_company_website" class="text-danger"></span>
                                 </div>
                                 <br />
@@ -297,17 +304,18 @@
                                 <p>Primary Category</p>
                                 <div class="form-group">
                                     <p>
+                                        <?php $business_primary_category = explode(', ', $supplier['business_primary_category']); ?>
                                         <label>
-                                            <input type="checkbox" name="business_primary_category[]" value="10_shift" id="business_primary_category_0" /> 10 - shift</label>
+                                            <input type="checkbox" name="business_primary_category[]" value="10_shift" id="business_primary_category_0" <?php if(in_array('10_shift', $business_primary_category)) echo 'checked'; ?> /> 10 - shift</label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_primary_category[]" value="smelting_plant" id="business_primary_category_1" /> Smelting plant</label>
+                                            <input type="checkbox" name="business_primary_category[]" value="smelting_plant" id="business_primary_category_1" <?php if(in_array('smelting_plant', $business_primary_category)) echo 'checked'; ?> /> Smelting plant</label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_primary_category[]" value="metal_refineries" id="business_primary_category_2" /> Metal Refineries</label>
+                                            <input type="checkbox" name="business_primary_category[]" value="metal_refineries" id="business_primary_category_2" <?php if(in_array('metal_refineries', $business_primary_category)) echo 'checked'; ?> /> Metal Refineries</label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_primary_category[]" value="mersesky" id="business_primary_category_3" /> Meresky
+                                            <input type="checkbox" name="business_primary_category[]" value="mersesky" id="business_primary_category_3" <?php if(in_array('mersesky', $business_primary_category)) echo 'checked'; ?> /> Meresky
                                         </label>
                                     </p>
                                 </div>
@@ -316,31 +324,32 @@
                                 <p>Direct</p>
                                 <div class="form-group">
                                     <p>
+                                        <?php $business_direct = explode(', ', $supplier['business_direct']); ?>
                                         <label>
-                                            <input type="checkbox" name="business_direct[]" value="10_construction" id="business_direct_10_construction" /> 10 - Construction</label>
+                                            <input type="checkbox" name="business_direct[]" value="10_construction" id="business_direct_10_construction" <?php if(in_array('10_construction', $business_direct)) echo 'checked'; ?> /> 10 - Construction</label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_direct[]" value="electrical" id="business_direct_electrical" /> Electrical
+                                            <input type="checkbox" name="business_direct[]" value="electrical" id="business_direct_electrical" <?php if(in_array('electrical', $business_direct)) echo 'checked'; ?> /> Electrical
                                         </label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_direct[]" value="fluid" id="business_direct_fluid" /> Fluid
+                                            <input type="checkbox" name="business_direct[]" value="fluid" id="business_direct_fluid" <?php if(in_array('fluid', $business_direct)) echo 'checked'; ?> /> Fluid
                                         </label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_direct[]" value="material" id="business_direct_material" /> Material
+                                            <input type="checkbox" name="business_direct[]" value="material" id="business_direct_material" <?php if(in_array('material', $business_direct)) echo 'checked'; ?> /> Material
                                         </label>
                                         <br />
-                                        <input type="checkbox" name="business_direct[]" value="machenical" id="business_direct_machenical" /> Machenical
+                                        <input type="checkbox" name="business_direct[]" value="machenical" id="business_direct_machenical" <?php if(in_array('machenical', $business_direct)) echo 'checked'; ?> /> Machenical
                                         </label>
                                         <br />
-                                        <input type="checkbox" name="business_direct[]" value="minning_commodity" id="business_direct_minning_commodity" /> Minning commodity</label>
+                                        <input type="checkbox" name="business_direct[]" value="minning_commodity" id="business_direct_minning_commodity" <?php if(in_array('minning_commodity', $business_direct)) echo 'checked'; ?> /> Minning commodity</label>
                                         <br />
-                                        <input type="checkbox" name="business_direct[]" value="minning_equipment" id="business_direct_minning_equipment" /> Minning Equipment</label>
+                                        <input type="checkbox" name="business_direct[]" value="minning_equipment" id="business_direct_minning_equipment" <?php if(in_array('minning_equipment', $business_direct)) echo 'checked'; ?> /> Minning Equipment</label>
                                         <br />
-                                        <input type="checkbox" name="business_direct[]" value="minning_services" id="business_direct_minning_services" /> Minning Services</label>
+                                        <input type="checkbox" name="business_direct[]" value="minning_services" id="business_direct_minning_services" <?php if(in_array('minning_services', $business_direct)) echo 'checked'; ?> /> Minning Services</label>
                                         <br />
-                                        <input type="checkbox" name="business_direct[]" value="processing" id="business_direct_processing" /> Processing
+                                        <input type="checkbox" name="business_direct[]" value="processing" id="business_direct_processing" <?php if(in_array('processing', $business_direct)) echo 'checked'; ?> /> Processing
                                         </label>
                                     </p>
                                 </div>
@@ -348,27 +357,28 @@
                                 <p>Indirect</p>
                                 <div class="form-group">
                                     <p>
+                                        <?php $business_indirect = explode(', ', $supplier['business_indirect']); ?>
                                         <label>
-                                            <input type="checkbox" name="business_indirect[]" value="facilitiest" id="business_indirect_facilitiest" /> Facilitiest
+                                            <input type="checkbox" name="business_indirect[]" value="facilitiest" id="business_indirect_facilitiest" <?php if(in_array('facilitiest', $business_indirect)) echo 'checked'; ?> /> Facilitiest
                                         </label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_indirect[]" value="financial" id="business_indirect_financial" /> Financial
+                                            <input type="checkbox" name="business_indirect[]" value="financial" id="business_indirect_financial" <?php if(in_array('financial', $business_indirect)) echo 'checked'; ?> /> Financial
                                         </label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_indirect[]" value="hr_services" id="business_indirect_hr_services" /> Hr Services</label>
+                                            <input type="checkbox" name="business_indirect[]" value="hr_services" id="business_indirect_hr_services" <?php if(in_array('hr_services', $business_indirect)) echo 'checked'; ?> /> Hr Services</label>
                                         <br />
                                         <label>
-                                            <input type="checkbox" name="business_indirect[]" value="information_tech" id="business_indirect_information_tech" /> Information Tech</label>
+                                            <input type="checkbox" name="business_indirect[]" value="information_tech" id="business_indirect_information_tech" <?php if(in_array('information_tech', $business_indirect)) echo 'checked'; ?> /> Information Tech</label>
                                         <br />
-                                        <input type="checkbox" name="business_indirect[]" value="professional" id="business_indirect_professional" /> Professional
+                                        <input type="checkbox" name="business_indirect[]" value="professional" id="business_indirect_professional" <?php if(in_array('professional', $business_indirect)) echo 'checked'; ?> /> Professional
                                         </label>
                                         <br />
-                                        <input type="checkbox" name="business_indirect[]" value="transport" id="business_indirect_transport" /> Transport
+                                        <input type="checkbox" name="business_indirect[]" value="transport" id="business_indirect_transport" <?php if(in_array('transport', $business_indirect)) echo 'checked'; ?> /> Transport
                                         </label>
                                         <br />
-                                        <input type="checkbox" name="business_indirect[]" value="travel" id="business_indirect_travel" /> Travel
+                                        <input type="checkbox" name="business_indirect[]" value="travel" id="business_indirect_travel" <?php if(in_array('travel', $business_indirect)) echo 'checked'; ?> /> Travel
                                         </label>
                                     </p>
                                 </div>
@@ -388,24 +398,25 @@
                             <div class="card-header">Company Financial Capacity</div>
                             <div class="card-body">
                                 <div class="form-group">
-                                        <p>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="0" id="financial_capacity_0"> 0 - R50,000</label>
-                                            <br>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="50000" id="financial_capacity_50000"> R50,000 - R100,000</label>
-                                            <br>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="100000" id="financial_capacity_100000"> R100,000 -R350,000</label>
-                                            <br>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="350000" id="financial_capacity_350000"> R350,000 - R500,000</label>
-                                            <br>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="500000" id="financial_capacity_500000"> R500,000 - R1,000,000</label>
-                                            <br>
-                                            <label><input type="checkbox" name="financial_capacity[]" value="1000000" id="financial_capacity_1000000"> R1,000,000 - Above</label>
-                                            <br>
-                                            <hr />
-                                            <label><input type="checkbox" name="financial_declare" id="financial_declare" value="1"> I declare that the company has the finacial capacity to render the service cost to the figure sellected above.</label>
-                                        </p>
+                                    <p>
+                                        <?php $financial_capacity = explode(', ', $supplier['financial_capacity']); ?>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="0" id="financial_capacity_0" <?php if(in_array('0', $financial_capacity)) echo 'checked'; ?> /> 0 - R50,000</label>
                                         <br>
-                                    </div>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="50000" id="financial_capacity_50000" <?php if(in_array('50000', $financial_capacity)) echo 'checked'; ?> /> R50,000 - R100,000</label>
+                                        <br>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="100000" id="financial_capacity_100000" <?php if(in_array('100000', $financial_capacity)) echo 'checked'; ?> /> R100,000 -R350,000</label>
+                                        <br>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="350000" id="financial_capacity_350000" <?php if(in_array('350000', $financial_capacity)) echo 'checked'; ?> /> R350,000 - R500,000</label>
+                                        <br>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="500000" id="financial_capacity_500000" <?php if(in_array('500000', $financial_capacity)) echo 'checked'; ?> /> R500,000 - R1,000,000</label>
+                                        <br>
+                                        <label><input type="checkbox" name="financial_capacity[]" value="1000000" id="financial_capacity_1000000" <?php if(in_array('1000000', $financial_capacity)) echo 'checked'; ?> /> R1,000,000 - Above</label>
+                                        <br>
+                                        <hr />
+                                        <label><input type="checkbox" name="financial_declare" id="financial_declare" value="1" <?php if($supplier['financial_declare']) echo 'checked'; ?> /> I declare that the company has the finacial capacity to render the service cost to the figure sellected above.</label>
+                                    </p>
+                                    <br>
+                                </div>
                                 <br />
                                 <div class="text-center">
                                     <button type="button" name="btn_prev_financial_details" id="btn_prev_financial_details" class="btn btn-default btn-lg">Previous</button>
@@ -423,30 +434,30 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Name of account holder</label>
-                                    <input type="text" name="bank_account" id="bank_account" class="form-control">
+                                    <input type="text" name="bank_account" id="bank_account" class="form-control" value="<?php echo $supplier['bank_account']; ?>">
                                     <span id="error_bank_account" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Name of bank</label>
-                                    <input type="text" name="bank_name" id="bank_name" class="form-control">
+                                    <input type="text" name="bank_name" id="bank_name" class="form-control" value="<?php echo $supplier['bank_name']; ?>">
                                     <span id="error_bank_name" class="text-danger"></span>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label>Account Number</label>
-                                    <input type="text" name="bank_account_number" id="bank_account_number" class="form-control">
+                                    <input type="text" name="bank_account_number" id="bank_account_number" class="form-control" value="<?php echo $supplier['bank_account_number']; ?>">
                                     <span id="error_bank_account_number" class="text-danger"></span>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label>Branch code</label>
-                                    <input type="text" name="bank_branch_code" id="bank_branch_code" class="form-control">
+                                    <input type="text" name="bank_branch_code" id="bank_branch_code" class="form-control" value="<?php echo $supplier['bank_branch_code']; ?>">
                                     <span id="error_bank_branch_code" class="text-danger"></span>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label>Swift code</label>
-                                    <input type="text" name="bank_swift_code" id="bank_swift_code" class="form-control">
+                                    <input type="text" name="bank_swift_code" id="bank_swift_code" class="form-control" value="<?php echo $supplier['bank_swift_code']; ?>">
                                     <span id="error_bank_swift_code" class="text-danger"></span>
                                 </div>
                                 <br>
@@ -500,7 +511,7 @@
                                 <br>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="document_terms" id="document_terms" value="1">Accept terms and condition.
+                                        <input type="checkbox" class="form-check-input" name="document_terms" id="document_terms" value="1" <?php if($supplier['document_terms']) echo 'checked'; ?>>Accept terms and condition.
                                     </label>
                                 </div>
                                 <div class="text-center">
@@ -714,7 +725,7 @@
             $('#btn_document_details').click(function() {
                 $('#btn_document_details').attr("disabled", "disabled");
                 $(document).css('cursor', 'prgress');
-                $("#register_form").submit();
+                $("#edit_form").submit();
             });
         });
     </script>
